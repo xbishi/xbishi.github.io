@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: system-ui, "Segoe UI", "Microsoft YaHei", sans-serif;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-zinc-950 text-zinc-200 antialiased;
+}
+
+/* 状态徽章语义色 */
+.badge-active { @apply bg-emerald-500/15 text-emerald-400 border-emerald-500/30; }
+.badge-paused { @apply bg-amber-500/15 text-amber-400 border-amber-500/30; }
+.badge-done   { @apply bg-sky-500/15 text-sky-400 border-sky-500/30; }
+.badge-archived { @apply bg-zinc-500/10 text-zinc-500 border-zinc-500/20; }
+
+.card {
+  @apply rounded-xl border border-zinc-800 bg-zinc-900/60 overflow-hidden
+         transition hover:border-zinc-600 hover:bg-zinc-900;
+}

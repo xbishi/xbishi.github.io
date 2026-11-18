@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const all = (await getCollection('projects')).sort((a, b) => {
+  if (a.data.order !== b.data.order) return a.data.order - b.data.order;
+  return b.data.year - a.data.year;
+});
+const featured = all.filter((p) => p.data.featured).slice(0, 4);
+const total = all.length;
+const activeCount = all.filter((p) => p.data.status === 'active').length;
+const doneCount = all.filter((p) => p.data.status === 'done').length;
+
+const TYPE_LABEL: Record<string, string> = {
+  all: '全部', game: '游戏', app: '应用', tool: '工具', ai: 'AI 管线',
+  business: '经营', hardware: '硬件', content: '内容',
+};
+const STATUS_LABEL: Record<string, string> = {
+  any: '任意状态', active: '进行中', paused: '暂停', done: '已完结', archived: '已归档',
+};
+---
+
+<Base title="xbishi.dev — 一人公司项目集">
+  <section class="py-10 md:py-16">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-zinc-100">
+      一个人，<span class="text-emerald-400">一支 AI 团队</span>
+    </h1>
+    <p class="mt-5 max-w-2xl text-zinc-400 leading-relaxed">
+      我用「人类负责意图与决策，AI 负责执行与交付」的方式，同时运营游戏、小程序、AI 管线与自研工具。
+      这里是全部在盘项目的控制台。
+    </p>
+    <div class="mt-8 flex gap-8 text-sm">
+      <div><span class="text-2xl font-bold text-zinc-100">{total}</span><span class="text-zinc-500 ml-1.5">个项目</span></div>
+      <div><span class="text-2xl font-bold text-emerald-400">{activeCount}</span><span class="text-zinc-500 ml-1.5">进行中</span></div>
+      <div><span class="text-2xl font-bold text-sky-400">{doneCount}</span><span class="text-zinc-500 ml-1.5">已完结</span></div>
+    </div>
+  </section>
+
+  {featured.length > 0 && (
+    <section class="pb-12">
+      <h2 class="text-xl font-semibold mb-5 text-zinc-300">精选</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {featured.map((p) => <ProjectCard project={p} showCover={true} />)}
+      </div>
+    </section>
+  )}
+
+  <section id="filter-bar" class="pb-6">
+    <h2 class="text-xl font-semibold mb-5 text-zinc-300">全部项目</h2>
+    <div class="flex flex-wrap gap-2 mb-6" data-filter="type">
+      {Object.entries(TYPE_LABEL).map(([k, v]) => (
+        <button class="fbtn px-3 py-1.5 text-sm rounded-full border border-zinc-700 text-zinc-400 hover:border-zinc-500 transition" data-type={k}>{v}</button>
+      ))}
+    </div>
+    <div class="flex flex-wrap gap-2 mb-8" data-filter="status">
+      {Object.entries(STATUS_LABEL).map(([k, v]) => (
+        <button class="fbtn px-3 py-1 text-sm rounded-full border border-zinc-700 text-zinc-400 hover:border-zinc-500 transition" data-status={k}>{v}</button>
+      ))}
+    </div>
+    <div id="grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {all.map((p) => (
+        <div class="proj" data-type={p.data.type} data-status={p.data.status}>
+          <ProjectCard project={p} />
+        </div>
+      ))}
+    </div>
+    <p id="empty" class="hidden text-center text-zinc-500 py-12">没有匹配的项目</p>
+  </section>
+</Base>
+
+<script>
+  const state = { type: 'all', status: 'any' };
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.fbtn');
+
+  function apply() {
+    let visible = 0;
+    document.querySelectorAll<HTMLElement>('.proj').forEach((el) => {
+      const ok =
+        (state.type === 'all' || el.dataset.type === state.type) &&
+        (state.status === 'any' || el.dataset.status === state.status);
+      el.classList.toggle('hidden', !ok);
+      if (ok) visible++;
+    });
+    document.getElementById('empty')?.classList.toggle('hidden', visible > 0);
+    buttons.forEach((b) => {
+      const active =
+        (b.dataset.type !== undefined && b.dataset.type === state.type) ||
+        (b.dataset.status !== undefined && b.dataset.status === state.status);
+      b.classList.toggle('border-emerald-500', active);
+      b.classList.toggle('text-emerald-400', active);
+    });
+  }
+
+  buttons.forEach((b) =>
+    b.addEventListener('click', () => {
+      if (b.dataset.type !== undefined) state.type = b.dataset.type;
+      if (b.dataset.status !== undefined) state.status = b.dataset.status ?? 'any';
+      apply();
+    })
+  );
+  apply();
+</script>

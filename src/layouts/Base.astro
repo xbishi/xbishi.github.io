@@ -1,0 +1,38 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = '一人公司的项目集：游戏、小程序、AI 管线与自研工具' } = Astro.props;
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <header class="border-b border-zinc-800/80 sticky top-0 backdrop-blur bg-zinc-950/80 z-10">
+      <nav class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+        <a href="/" class="font-bold tracking-wide">xbishi<span class="text-emerald-400">.dev</span></a>
+        <div class="flex gap-6 text-sm text-zinc-400">
+          <a href="/" class="hover:text-zinc-100 transition">项目</a>
+          <a href="/#filter-bar" class="hover:text-zinc-100 transition">筛选</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-10">
+      <slot />
+    </main>
+
+    <footer class="border-t border-zinc-800/80 py-8 text-center text-sm text-zinc-500">
+      <p>一人公司 · 人类决策 + AI 执行 · <a class="hover:text-zinc-300 underline underline-offset-4" href="https://github.com/xbishi" target="_blank" rel="noopener">GitHub</a></p>
+    </footer>
+  </body>
+</html>

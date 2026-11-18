@@ -1,0 +1,81 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((p) => ({ params: { slug: p.id }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const d = project.data;
+
+const TYPE_LABEL: Record<string, string> = {
+  game: '游戏', app: '应用', tool: '工具', ai: 'AI 管线',
+  business: '经营', hardware: '硬件', content: '内容',
+};
+const STATUS_LABEL: Record<string, string> = {
+  active: '进行中', paused: '暂停', done: '已完结', archived: '已归档',
+};
+---
+
+<Base title={`${d.title} — xbishi.dev`} description={d.summary}>
+  <div class="max-w-3xl mx-auto">
+    <a href="/" class="text-sm text-zinc-500 hover:text-zinc-300 transition">← 返回项目集</a>
+
+    <header class="mt-6 mb-8">
+      <div class="flex flex-wrap items-center gap-3 mb-3">
+        <span class={`badge text-xs px-2.5 py-1 rounded-full border ${`badge-${d.status}`}`}>{STATUS_LABEL[d.status]}</span>
+        <span class="text-xs px-2.5 py-1 rounded-full border border-zinc-700 text-zinc-400">{TYPE_LABEL[d.type]}</span>
+        <span class="text-sm text-zinc-500">{d.year}</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold text-zinc-100">{d.title}</h1>
+      <p class="mt-3 text-lg text-zinc-400">{d.summary}</p>
+      {
+        (d.links.demo || d.links.repo || d.links.docs) && (
+          <div class="mt-5 flex flex-wrap gap-3">
+            {d.links.demo && (
+              <a href={d.links.demo} target="_blank" rel="noopener" class="px-4 py-2 rounded-lg bg-emerald-500 text-zinc-950 text-sm font-medium hover:bg-emerald-400 transition">
+                在线体验
+              </a>
+            )}
+            {d.links.repo && (
+              <a href={d.links.repo} target="_blank" rel="noopener" class="px-4 py-2 rounded-lg border border-zinc-700 text-sm hover:border-zinc-500 transition">
+                源码
+              </a>
+            )}
+            {d.links.docs && (
+              <a href={d.links.docs} target="_blank" rel="noopener" class="px-4 py-2 rounded-lg border border-zinc-700 text-sm hover:border-zinc-500 transition">
+                文档
+              </a>
+            )}
+          </div>
+        )
+      }
+    </header>
+
+    {
+      d.cover && (
+        <img src={d.cover} alt={d.title} class="w-full rounded-xl border border-zinc-800 mb-8" />
+      )
+    }
+
+    <article class="prose-invert max-w-none
+      [&_h2]:text-zinc-200 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:mt-8 [&_h2]:mb-3
+      [&_p]:text-zinc-400 [&_p]:leading-relaxed [&_p]:my-3
+      [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:text-zinc-400 [&_li]:my-1
+      [&_a]:text-emerald-400 [&_a]:underline [&_a]:underline-offset-4
+      [&_code]:bg-zinc-800/70 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm
+      [&_img]:rounded-xl [&_img]:border [&_img]:border-zinc-800">
+      <Content />
+    </article>
+
+    <div class="mt-10 pt-6 border-t border-zinc-800">
+      <h2 class="text-sm text-zinc-500 mb-3">技术栈</h2>
+      <div class="flex flex-wrap gap-2">
+        {d.tech.map((t) => <span class="text-sm text-zinc-300 bg-zinc-800/70 px-3 py-1 rounded-md">{t}</span>)}
+      </div>
+    </div>
+  </div>
+</Base>
