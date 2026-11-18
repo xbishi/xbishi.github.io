@@ -1,11 +1,25 @@
-# 项目模板 · 使用说明
+# bs-portfolio — 个人工具网站
 
-这是新项目的脚手架。整个复制到 `项目/<项目名>/` 后：
+线上地址：https://xbishi.github.io
 
-1. 填 `PROJECT.md` —— 目标与边界
-2. 改 `AGENTS.md` —— 协作公约与代码约定
-3. `协作/` 四件套直接用：任务看板 / 决策日志 / 交接日志 / 审查记录
-4. `src/` 放代码，`docs/` 放设计文档与调研，`归档/` 放过期产物
-5. 内容型项目可把 `src/` 改名为 `内容/` 等，结构服务于项目，不僵化
+## 这是什么
+BS 一人公司对外的作品集门面 + 对内的项目导航控制台。纯静态站（Astro 5 + Tailwind 4），数据驱动：**加一个项目 = 加一个 Markdown 文件**。
 
-删除本说明文件即可开工。
+## 怎么加项目
+1. 复制 `src/content/projects/_template.md` 为 `<项目slug>.md`
+2. 填 frontmatter（标题/一句话/状态/类型/技术栈）+ 正文（背景/亮点）
+3. 提交推送 main 分支
+
+## 怎么更新线上
+当前部署方式：**gh-pages 分支手动部署**（OAuth token 缺 workflow scope，Actions 暂缓）：
+```bash
+pnpm build
+cd dist && git add -A && git commit -m "deploy" && git push -f origin gh-pages
+```
+负责人执行 `gh auth refresh -s workflow` 授权后，可启用 `.github/workflows/deploy.yml` 切回 push 即自动部署。
+
+## 本地开发
+```bash
+pnpm install   # 缓存已在 .npmrc 指向 H 盘
+pnpm dev       # http://localhost:4321
+```
