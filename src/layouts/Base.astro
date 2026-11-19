@@ -14,25 +14,51 @@ import '../styles/global.css';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#05070d" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body class="min-h-screen flex flex-col">
-    <header class="border-b border-zinc-800/80 sticky top-0 backdrop-blur bg-zinc-950/80 z-10">
-      <nav class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-        <a href="/" class="font-bold tracking-wide">xbishi<span class="text-emerald-400">.dev</span></a>
-        <div class="flex gap-6 text-sm text-zinc-400">
-          <a href="/" class="hover:text-zinc-100 transition">项目</a>
-          <a href="/#filter-bar" class="hover:text-zinc-100 transition">筛选</a>
+    <div class="bg-atmosphere" aria-hidden="true"></div>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="bg-noise" aria-hidden="true"></div>
+
+    <header class="sticky top-0 z-10 border-b border-white/5 backdrop-blur bg-ink/70">
+      <nav class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between font-mono text-sm">
+        <a href="/" class="text-zinc-200 hover:text-accent transition">
+          <span class="text-zinc-500">~/</span>xbishi<span class="text-accent">$</span>
+        </a>
+        <div class="flex gap-6 text-xs tracking-widest uppercase text-zinc-500">
+          <a href="/#projects" class="hover:text-accent transition">项目</a>
+          <a href="https://github.com/xbishi" target="_blank" rel="noopener" class="hover:text-accent transition">GitHub ↗</a>
         </div>
       </nav>
     </header>
 
-    <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-10">
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-12">
       <slot />
     </main>
 
-    <footer class="border-t border-zinc-800/80 py-8 text-center text-sm text-zinc-500">
-      <p>一人公司 · 人类决策 + AI 执行 · <a class="hover:text-zinc-300 underline underline-offset-4" href="https://github.com/xbishi" target="_blank" rel="noopener">GitHub</a></p>
+    <footer class="border-t border-white/5 py-10">
+      <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row gap-3 items-center justify-between font-mono text-xs text-zinc-600">
+        <p><span class="text-zinc-500">~/xbishi</span> · 一人公司 · 人类决策 + AI 执行</p>
+        <p>built with astro · <a class="hover:text-accent transition underline underline-offset-4" href="https://github.com/xbishi" target="_blank" rel="noopener">github</a></p>
+      </div>
     </footer>
+
+    <script>
+      // 滚动淡入：进入视口加 .in
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.08 }
+      );
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    </script>
   </body>
 </html>

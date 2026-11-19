@@ -1,0 +1,40 @@
+# bs-portfolio nginx 站点配置
+# 用法：复制到 /etc/nginx/sites-available/bs-portfolio，改 server_name 后
+#   sudo ln -s /etc/nginx/sites-available/bs-portfolio /etc/nginx/sites-enabled/
+#   sudo nginx -t && sudo systemctl reload nginx
+# （无 sites-enabled 的发行版：放到 /etc/nginx/conf.d/bs-portfolio.conf）
+
+server {
+    listen 80;
+    # 有域名绑域名；没有就填服务器 IP
+    server_name me.bishi.tech 1.2.3.4;
+
+    root /var/www/bs-portfolio;
+    index index.html;
+
+    # 纯静态站：/projects/xxx/ 命中目录下的 index.html
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # 带指纹的静态资源长期缓存
+    location ~* \.(js|css|png|jpg|jpeg|webp|svg|woff2?|ico)$ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # HTML 不缓存，保证更新即时生效
+    location = /index.html {
+        add_header Cache-Control "no-cache";
+    }
+    location ~* /projects/.*/index\.html$ {
+        add_header Cache-Control "no-cache";
+    }
+
+    gzip on;
+    gzip_types text/css application/javascript image/svg+xml application/json text/plain;
+    gzip_min_length 1024;
+}
+
+# HTTPS 套壳（有域名后执行 certbot 即自动生成）：
+#   sudo certbot --nginx -d me.bishi.tech

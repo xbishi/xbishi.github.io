@@ -13,33 +13,26 @@ const STATUS_LABEL: Record<string, string> = {
 
 interface Props {
   project: Project;
-  showCover?: boolean;
+  index?: number; // 展示序号（01. 02. …）
 }
-const { project, showCover = false } = Astro.props;
+const { project, index } = Astro.props;
 const d = project.data;
+const num = index !== undefined ? String(index + 1).padStart(2, '0') : null;
 ---
 
 <a href={`/projects/${project.id}/`} class="card group flex flex-col">
-  {
-    showCover && d.cover && (
-      <img
-        src={d.cover}
-        alt={d.title}
-        loading="lazy"
-        class="w-full aspect-[16/9] object-cover"
-      />
-    )
-  }
-  <div class="p-5 flex flex-col gap-2 flex-1">
-    <div class="flex items-start justify-between gap-3">
-      <h3 class="font-semibold text-lg text-zinc-100 group-hover:text-emerald-400 transition">{d.title}</h3>
-      <span class="shrink-0 text-xs text-zinc-500">{d.year}</span>
+  <div class="p-5 flex flex-col gap-2.5 flex-1">
+    <div class="flex items-baseline justify-between gap-3">
+      <h3 class="font-semibold text-lg text-zinc-100 group-hover:text-accent transition">
+        {num && <span class="font-mono text-sm text-accent/80 mr-2">{num}.</span>}{d.title}
+      </h3>
+      <span class="shrink-0 font-mono text-xs text-zinc-600">{d.year}</span>
     </div>
     <p class="text-sm text-zinc-400 leading-relaxed flex-1">{d.summary}</p>
     <div class="flex flex-wrap items-center gap-2 pt-1">
-      <span class={`badge text-xs px-2 py-0.5 rounded-full border ${`badge-${d.status}`}`}>{STATUS_LABEL[d.status]}</span>
-      <span class="text-xs px-2 py-0.5 rounded-full border border-zinc-700 text-zinc-400">{TYPE_LABEL[d.type]}</span>
-      {d.tech.slice(0, 3).map((t) => <span class="text-xs text-zinc-500 bg-zinc-800/60 px-2 py-0.5 rounded">{t}</span>)}
+      <span class={`badge badge-${d.status}`}><i class={`dot dot-${d.status}`} aria-hidden="true"></i>{STATUS_LABEL[d.status]}</span>
+      <span class="badge border-white/10 text-zinc-400 bg-white/5">{TYPE_LABEL[d.type]}</span>
+      {d.tech.slice(0, 3).map((t) => <span class="font-mono text-xs text-zinc-500 bg-white/5 border border-white/10 px-2 py-0.5 rounded">{t}</span>)}
     </div>
   </div>
 </a>
