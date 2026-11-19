@@ -7,6 +7,14 @@ year: 2026
 tech: [TTS, 字幕对齐, 剪映]
 featured: false
 order: 25
+stages:
+  - { name: 立项调研, done: true }
+  - { name: 核心构建, done: true }
+  - { name: 打磨验收, done: true }
+  - { name: 发布运营, done: false }
+percent: 70
+versions:
+  - { v: 第一期, note: 首条视频进入配音剪辑交付 }
 ---
 
 ## 背景与问题

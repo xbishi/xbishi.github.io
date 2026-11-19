@@ -7,6 +7,14 @@ year: 2026
 tech: [FastAPI, PostgreSQL, uni-app, pytest]
 featured: true
 order: 3
+stages:
+  - { name: 立项调研, done: true }
+  - { name: 核心构建, done: true }
+  - { name: 打磨验收, done: true }
+  - { name: 发布运营, done: false }
+percent: 70
+versions:
+  - { v: M1, note: 契约先行架构 + 419 项测试全绿 }
 ---
 
 ## 背景与问题

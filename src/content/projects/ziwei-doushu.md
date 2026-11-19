@@ -7,6 +7,15 @@ year: 2026
 tech: [AI 审核, 智谱 GLM]
 featured: true
 order: 2
+stages:
+  - { name: 立项调研, done: true }
+  - { name: 核心构建, done: true }
+  - { name: 打磨验收, done: true }
+  - { name: 发布运营, done: false }
+percent: 75
+versions:
+  - { v: v0.9.4, note: 基线版本 }
+  - { v: v0.9.8, note: 五连版：AI 审核闸 + 免费模型通道 + 后台三 Tab }
 ---
 
 ## 背景与问题

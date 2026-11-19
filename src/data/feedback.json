@@ -1,0 +1,13 @@
+{
+  "_说明": "已审核留言弹幕池。来源三种：owner=站长寄语、visitor=访客留言（经 feedback-server 收取+人工审核）、milestone=里程碑记录。审核流程见 server/留言审核流程.md",
+  "quncequnli": [
+    { "nick": "站长", "text": "86 项自动化验收走查全过，batch4 当天出题当天全绿——这个项目的纪律值得记一笔", "from": "owner" },
+    { "nick": "站长", "text": "P0 根因定位到代码行、当晚热修生效，这就是静态站的迭代速度", "from": "owner" }
+  ],
+  "paotuan": [
+    { "nick": "站长", "text": "419 项 pytest 全绿，17.7 秒跑完。契约先行的味道", "from": "owner" }
+  ],
+  "grokfilm": [
+    { "nick": "站长", "text": "300 条技法一条条结构化进去的，完结纪念", "from": "owner" }
+  ]
+}

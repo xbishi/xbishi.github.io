@@ -7,6 +7,14 @@ year: 2026
 tech: [Toonflow, TypeScript, H3]
 featured: false
 order: 26
+stages:
+  - { name: 立项调研, done: true }
+  - { name: 核心构建, done: true }
+  - { name: 打磨验收, done: false }
+  - { name: 发布运营, done: false }
+percent: 55
+versions:
+  - { v: v0.3, note: Toonflow 适配器部署，待实测 }
 ---
 
 ## 背景与问题

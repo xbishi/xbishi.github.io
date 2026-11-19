@@ -7,6 +7,14 @@ year: 2026
 tech: [Godot 4, GDScript, GUT, fly.io]
 featured: true
 order: 4
+stages:
+  - { name: 立项调研, done: true }
+  - { name: 核心构建, done: true }
+  - { name: 打磨验收, done: false }
+  - { name: 发布运营, done: false }
+percent: 60
+versions:
+  - { v: v0.7-memory, note: 记忆系统批次在途 }
 ---
 
 ## 背景与问题

@@ -7,6 +7,14 @@ year: 2026
 tech: [ESP32-C3, Arduino, Node.js, Playwright]
 featured: false
 order: 16
+stages:
+  - { name: 立项调研, done: true }
+  - { name: 核心构建, done: true }
+  - { name: 打磨验收, done: false }
+  - { name: 发布运营, done: false }
+percent: 65
+versions:
+  - { v: V2, note: 真机全链路打通 }
 ---
 
 ## 背景与问题

@@ -7,6 +7,14 @@ year: 2026
 tech: [Python, ComfyUI, Hunyuan3D, Blender MCP]
 featured: false
 order: 19
+stages:
+  - { name: 立项调研, done: true }
+  - { name: 核心构建, done: true }
+  - { name: 打磨验收, done: true }
+  - { name: 发布运营, done: false }
+percent: 70
+versions:
+  - { v: v0.4, note: 双引擎编排 + Blender 后处理 }
 ---
 
 ## 背景与问题

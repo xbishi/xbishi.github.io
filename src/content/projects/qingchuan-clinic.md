@@ -7,6 +7,14 @@ year: 2026
 tech: [美团运营, CDP 自动化, 物料自动化]
 featured: false
 order: 22
+stages:
+  - { name: 立项调研, done: true }
+  - { name: 核心构建, done: true }
+  - { name: 打磨验收, done: true }
+  - { name: 发布运营, done: false }
+percent: 85
+versions:
+  - { v: 运营中, note: 美团四线持续运营 }
 ---
 
 ## 背景与问题

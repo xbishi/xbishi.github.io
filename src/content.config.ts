@@ -20,6 +20,15 @@ const projects = defineCollection({
       .default({}),
     featured: z.boolean().default(false),
     order: z.number().default(99),
+    // 开发进度：阶段列表 + 百分比（阶段旗子在详情页渲染）
+    stages: z
+      .array(z.object({ name: z.string(), done: z.boolean().default(false) }))
+      .default([]),
+    percent: z.number().min(0).max(100).optional(),
+    // 大版本迭代记录（不追小版本）
+    versions: z
+      .array(z.object({ v: z.string(), note: z.string(), date: z.string().optional() }))
+      .default([]),
   }),
 });
 

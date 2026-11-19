@@ -7,6 +7,14 @@ year: 2026
 tech: [ComfyUI, 电商运营]
 featured: false
 order: 21
+stages:
+  - { name: 立项调研, done: true }
+  - { name: 核心构建, done: true }
+  - { name: 打磨验收, done: true }
+  - { name: 发布运营, done: false }
+percent: 80
+versions:
+  - { v: 在售, note: 淘宝店铺上线运营 }
 ---
 
 ## 背景与问题

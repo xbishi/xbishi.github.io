@@ -7,6 +7,14 @@ year: 2026
 tech: [ZCode 定时任务, 企微 webhook]
 featured: false
 order: 13
+stages:
+  - { name: 立项调研, done: true }
+  - { name: 核心构建, done: true }
+  - { name: 打磨验收, done: true }
+  - { name: 发布运营, done: true }
+percent: 100
+versions:
+  - { v: v1.0, note: 日报流水线全自动上线 }
 ---
 
 ## 背景与问题

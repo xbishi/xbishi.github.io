@@ -1,0 +1,35 @@
+---
+// 项目留言弹幕：构建时内嵌已审核留言（src/data/feedback.json），CSS 无限循环，零运行时依赖
+import feedback from '../data/feedback.json';
+
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+const items = (feedback as Record<string, FeedbackItem[]>)[slug] ?? [];
+
+type FeedbackItem = { nick: string; text: string; from?: string };
+
+// 三条行道轮转，速度/延迟按索引错开避免同排叠加
+const LANES = [0, 30, 60];
+const SPEEDS = [26, 34, 42];
+---
+
+{
+  items.length > 0 && (
+    <div class="my-9">
+      <p class="kicker mb-2">// feedback 弹幕（已审核留言循环播放）</p>
+      <div class="danmaku-track" aria-label="项目留言弹幕">
+        {items.map((m, i) => (
+          <span
+            class="danmaku"
+            style={`top:${LANES[i % 3]}px;animation-duration:${SPEEDS[i % 3]}s;animation-delay:${(i * 3.7) % 14}s`}
+          >
+            <span class="text-accent/80 font-mono text-xs mr-2">{m.nick}:</span>
+            {m.text}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}

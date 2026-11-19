@@ -7,6 +7,14 @@ year: 2026
 tech: [Python, Blender headless, SQLite]
 featured: false
 order: 20
+stages:
+  - { name: 立项调研, done: true }
+  - { name: 核心构建, done: true }
+  - { name: 打磨验收, done: false }
+  - { name: 发布运营, done: false }
+percent: 65
+versions:
+  - { v: v0.5, note: 18 个规格建模套件 }
 ---
 
 ## 背景与问题

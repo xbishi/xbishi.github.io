@@ -7,6 +7,14 @@ year: 2026
 tech: [C#/.NET 8, BepInEx, Harmony]
 featured: false
 order: 15
+stages:
+  - { name: 立项调研, done: true }
+  - { name: 核心构建, done: true }
+  - { name: 打磨验收, done: true }
+  - { name: 发布运营, done: true }
+percent: 100
+versions:
+  - { v: v1.6.4, note: 按玩家反馈持续发版 }
 ---
 
 ## 背景与问题

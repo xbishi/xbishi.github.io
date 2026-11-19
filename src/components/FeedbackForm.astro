@@ -1,0 +1,67 @@
+---
+// 留言表单：POST 到同源 /api/feedback（自有服务器 nginx 反代到 feedback-server）。
+// 静态托管时 fetch 失败 → 降级提示。
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+---
+
+<div class="mt-12 pt-8 border-t border-white/8">
+  <p class="kicker mb-4">// feedback 留言</p>
+  <p class="text-sm text-zinc-500 mb-4">对这个项目有想法？留言会进入待审核队列，审核通过后出现在上面的弹幕里。</p>
+  <form id="fb-form" data-project={slug} class="flex flex-col gap-3 max-w-xl">
+    <input
+      id="fb-nick"
+      type="text"
+      maxlength="24"
+      placeholder="昵称（可匿名）"
+      class="bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-accent/60 transition"
+    />
+    <textarea
+      id="fb-text"
+      rows="3"
+      maxlength="200"
+      required
+      placeholder="留言内容（200 字内）：建议 / 吐槽 / 打气都行"
+      class="bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-accent/60 transition resize-none"
+    />
+    <div class="flex items-center gap-4">
+      <button
+        type="submit"
+        class="px-5 py-2.5 rounded-lg bg-accent text-ink text-sm font-semibold hover:brightness-110 transition shadow-[0_0_24px_-8px_var(--color-accent)]"
+      >
+        发送留言 →
+      </button>
+      <span id="fb-msg" class="font-mono text-xs text-zinc-500" />
+    </div>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('fb-form') as HTMLFormElement | null;
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('fb-msg')!;
+    const nick = (document.getElementById('fb-nick') as HTMLInputElement).value.trim() || '匿名';
+    const text = (document.getElementById('fb-text') as HTMLTextAreaElement).value.trim();
+    if (!text) return;
+    msg.textContent = '发送中…';
+    try {
+      const res = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          project: form.dataset.project,
+          nick: nick.slice(0, 24),
+          text: text.slice(0, 200),
+        }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      msg.textContent = '✓ 已收到，进入审核队列';
+      (document.getElementById('fb-text') as HTMLTextAreaElement).value = '';
+    } catch {
+      msg.textContent = '✗ 留言服务未上线（服务器部署后开放），先记在心里吧';
+    }
+  });
+</script>

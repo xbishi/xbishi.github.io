@@ -200,10 +200,73 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--color-accent) 55%, transparent); }
 html { scrollbar-color: rgba(255, 255, 255, 0.16) var(--color-ink); }
 
+/* ═══ 进度条：霓虹渐变 + 条纹流动 ═══ */
+.progress-fill {
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.12) 0 6px,
+      transparent 6px 12px
+    ),
+    linear-gradient(90deg, var(--color-accent), var(--color-accent-2));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--color-accent) 55%, transparent);
+  transition: width 0.8s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+/* 当前阶段飘旗呼吸 */
+.flag-wave { animation: flagpulse 1.6s ease-in-out infinite; }
+@keyframes flagpulse {
+  50% { opacity: 0.45; }
+}
+
+/* ═══ 版本时间线 ═══ */
+.timeline { position: relative; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-accent) 60%, transparent), transparent);
+}
+
+/* ═══ 弹幕 ═══ */
+.danmaku-track {
+  position: relative;
+  height: 92px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.75rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+}
+.danmaku {
+  position: absolute;
+  left: 100%;
+  white-space: nowrap;
+  font-size: 0.82rem;
+  color: #aab3c0;
+  padding: 0.3rem 0.9rem;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  line-height: 1;
+  animation-name: danmaku-fly;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+@keyframes danmaku-fly {
+  to { transform: translateX(calc(-100vw + 0px)); }
+}
+
 /* ═══ 无障碍：减少动效 ═══ */
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
-  .cursor, .dot-active { animation: none; }
+  .cursor, .dot-active, .flag-wave { animation: none; }
+  .danmaku { animation: none; position: static; display: inline-block; margin: 0.35rem 0.5rem; }
+  .danmaku-track { height: auto; padding: 0.6rem; display: flex; flex-wrap: wrap; }
+  .progress-fill { transition: none; }
   html { scroll-behavior: auto; }
   .card, .card::before { transition: none; }
 }
