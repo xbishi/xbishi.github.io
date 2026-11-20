@@ -5,8 +5,8 @@ status: active
 type: app
 year: 2026
 tech: [AI 审核, 智谱 GLM]
-featured: true
-order: 2
+featured: false
+order: 5
 stages:
   - { name: 立项调研, done: true }
   - { name: 核心构建, done: true }

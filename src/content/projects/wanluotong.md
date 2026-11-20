@@ -1,7 +1,7 @@
 ---
 title: 万络通
-summary: 在售电商品牌：ComfyUI 批量出图的商品视觉产线
-status: active
+summary: 电商品牌（合规整改中）：达标证续期期间主动下架，恢复上架待新证
+status: paused
 type: business
 year: 2026
 tech: [ComfyUI, 电商运营]
@@ -15,6 +15,7 @@ stages:
 percent: 80
 versions:
   - { v: 在售, note: 淘宝店铺上线运营 }
+  - { v: 整改, note: 达标证到期主动下架，续证后恢复 }
 ---
 
 ## 背景与问题
@@ -24,5 +25,5 @@ versions:
 ## 做了什么
 
 - ComfyUI 工作流批量生成商品视觉图
-- 淘宝店铺在售，电商运营资料库沉淀
-- 合规三证与礼盒定价推进中
+- 淘宝店铺上线运营，电商运营资料库沉淀
+- 合规自查发现达标证到期，2026-11 主动下架整改（下架指引在项目目录）

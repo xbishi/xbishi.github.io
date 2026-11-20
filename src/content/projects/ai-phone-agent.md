@@ -6,7 +6,7 @@ type: ai
 year: 2026
 tech: [Python, voice MCP]
 featured: false
-order: 24
+order: 25
 stages:
   - { name: 立项调研, done: true }
   - { name: 核心构建, done: false }
